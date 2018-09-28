@@ -96,7 +96,13 @@ class Calculator {
 
     // ------- Infix 2 Postfix ------------------------
 
-    // TODO Methods
+    List<String> infix2Postfix(List<String> infixList){
+
+        // TODO @OG: Write method to convert infix expression to postfix expression given a List<String> with each token as a String in the List.
+
+        return new ArrayList<String>();
+    }
+
 
     int getPrecedence(String op) {
         if ("+-".contains(op)) {
@@ -128,6 +134,11 @@ class Calculator {
 
     // ---------- Tokenize -----------------------
 
-    // TODO Methods to tokenize
+    List<String> tokenize(String expression){
+
+        // TODO @Bakis Write method to tokenize a string - given a String returning a List<String> with each token in the input String being a String in the List.
+
+        return new ArrayList<String>();
+    }
 
 }
