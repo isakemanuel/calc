@@ -125,7 +125,7 @@ class Test {
 
 
     // ------- Below are helper methods for testing NOTHING to do here -------------------
-
+/*
     // t for tokenize, a very short name, lazy, avoid typing ...
     void t(String expr, String expected) {
         List<String> list = calculator.tokenize(expr);
@@ -148,5 +148,5 @@ class Test {
         double result = calculator.evalPostfix(postfix);
         out.println(result == expected);
     }
-
+*/
 }
