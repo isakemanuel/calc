@@ -40,7 +40,40 @@ class Calculator {
 
     // ------  Evaluate RPN expression -------------------
 
-    // TODO Eval methods
+    double evalPostfix(List<String> postfix){
+        //double result = 0;
+
+        Deque<String> expression = new ArrayDeque<String>(postfix);
+
+        Deque<String> stack = new ArrayDeque<String>();
+
+        while(!expression.isEmpty()){
+            String token = expression.pop();
+
+            if (OPERATORS.contains(token)){
+                if (stack.size() >= 2){
+                    double d1 = Double.valueOf(stack.pop());
+                    double d2 = Double.valueOf(stack.pop());
+                    String result = applyOperator(token, d1, d2) + "";
+                    stack.push(result);
+                }else{
+                    throw new IllegalArgumentException(MISSING_OPERAND);
+                }
+
+            }else{
+                stack.push(token);
+            }
+        }
+
+
+
+        if(stack.size() != 1){
+            throw new IllegalArgumentException(MISSING_OPERATOR);
+        }
+
+        return Double.valueOf(stack.pop());
+
+    }
 
     double applyOperator(String op, double d1, double d2) {
         switch (op) {
@@ -64,13 +97,6 @@ class Calculator {
     // ------- Infix 2 Postfix ------------------------
 
     // TODO Methods
-
-
-
-
-
-
-
 
     int getPrecedence(String op) {
         if ("+-".contains(op)) {
