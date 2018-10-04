@@ -1,6 +1,9 @@
 package calc;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
 import static java.lang.Double.NaN;
 import static java.lang.Math.pow;
@@ -73,7 +76,6 @@ class Calculator {
         }
 
         return Double.valueOf(stack.pop());
-
     }
 
     double applyOperator(String op, double d1, double d2) {
@@ -101,9 +103,69 @@ class Calculator {
 
         // TODO @OG: Write method to convert infix expression to postfix expression given a List<String> with each token as a String in the List.
 
-        return new ArrayList<String>();
+        List<String> postfixList = new ArrayList<String>();
+        Deque<String> stack = new ArrayDeque<>();
+
+        for (String token: infixList) {
+
+            if (isNum(token)) {
+                postfixList.add(token);
+            }
+            else if (isOp(token)) {
+                while (!stack.isEmpty()) {
+                    if (!stack.peek().equals("(")) {
+                        if (getPrecedence(token) < getPrecedence(stack.peek()) || (getPrecedence(token) == getPrecedence(stack.peek()) && getAssociativity(stack.peek()) == Assoc.LEFT)) {
+                            postfixList.add(stack.pop());
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                    else {
+                        break;
+                    }
+                }
+                stack.push(token);
+            }
+            else if (token.equals("(")) {
+                stack.push(token);
+            }
+            else if (token.equals(")")) {
+                while (!stack.peek().equals("(")) {
+                    postfixList.add(stack.pop());
+                }
+                stack.pop();
+            }
+            else {
+                // We just have this else argument incase we would recive som garbage we wouldn't like tot append it to postfix
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            postfixList.add(stack.pop());
+        }
+
+        return postfixList;
     }
 
+    boolean isNum(String token) {
+        boolean bool = false;
+        try {
+            float f = Float.parseFloat(token);
+            bool = true;
+        }
+        catch (Exception e) {
+            bool = false;
+        }
+        finally {
+            return bool;
+        }
+    }
+
+    boolean isOp(String token) {
+        return "+-*/^".contains(token);
+
+    }
 
     int getPrecedence(String op) {
         if ("+-".contains(op)) {
@@ -161,5 +223,7 @@ class Calculator {
 
         return list;
     }
+
+
 
 }
