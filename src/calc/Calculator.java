@@ -145,7 +145,6 @@ class Calculator {
         return postfixList;
     }
 
-
     boolean isNum(String token) {
         boolean bool = false;
         try {
