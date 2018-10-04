@@ -29,6 +29,7 @@ class Calculator {
 
     // Definition of operators
     final static String OPERATORS = "+-*/^";
+    final static String NUMBERS = "0123456789";
 
     // Method used in REPL
     double eval(String expr) {
@@ -198,12 +199,29 @@ class Calculator {
 
     List<String> tokenize(String expression){
 
+        String OPERATORSANDPAR = OPERATORS + "()";
         List<String> list = new ArrayList<>();
         char[] c = expression.toCharArray();
+        StringBuilder a;
 
+        for (int i = 0; i < c.length; i++){
+            a = new StringBuilder();
+            if(NUMBERS.contains(Character.toString(c[i]))){
+                a.append(c[i]);
+                while(i < (c.length - 1) && (c[i] == '.' || NUMBERS.contains(Character.toString(c[i + 1])))){
+                    a.append(c[i + 1]);
+                    i++;
+                }
+                list.add(a.toString());
+            }
+            else if(OPERATORSANDPAR.contains(Character.toString(c[i]))){
+                list.add(Character.toString(c[i]));
+            }
 
+        }
+        System.out.print(list);
 
-        return new ArrayList<String>();
+        return list;
     }
 
 
