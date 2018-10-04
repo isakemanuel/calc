@@ -1,12 +1,5 @@
 package calc;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
-
-import static java.lang.System.out;
-
 /**
  * This is a test program for the Calculator (testing a Calculator object)
  * It should output true for everything
@@ -30,14 +23,15 @@ class Test {
         // Uncomment line by line to test
 
         // Tokenization ---------------------------
-        /*t("1 + 10", "1 + 10");  // Arguments are input and expected output
+  /*
+        t("1 + 10", "1 + 10");  // Arguments are input and expected output
         t("1+ 10", "1 + 10");   // Expected is in fact a list [ "1", "+", "10"]
         t("1 +10", "1 + 10");
         t("1+10", "1 + 10");
         t("(1+10) ", "( 1 + 10 )");  // List is [ "(", "1", "+", "10", ")" ]
         t("2 *( 1+10) ", "2 * ( 1 + 10 )");
         t("(1 +2) /2 *( 1+10) ", "( 1 + 2 ) / 2 * ( 1 + 10 )");
-        */
+*/
 
         // Infix to postfix -----------------------
         /*
@@ -126,7 +120,7 @@ class Test {
 
     // ------- Below are helper methods for testing NOTHING to do here -------------------
 /*
-    // t for tokenize, a very short name, lazy, avoid typing ...
+  EvalPostfix  // t for tokenize, a very short name, lazy, avoid typing ...
     void t(String expr, String expected) {
         List<String> list = calculator.tokenize(expr);
         String result = String.join(" ", list);

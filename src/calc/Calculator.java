@@ -1,6 +1,9 @@
 package calc;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
 import static java.lang.Double.NaN;
 import static java.lang.Math.pow;
@@ -72,7 +75,6 @@ class Calculator {
         }
 
         return Double.valueOf(stack.pop());
-
     }
 
     double applyOperator(String op, double d1, double d2) {
@@ -160,12 +162,7 @@ class Calculator {
     }
 
     boolean isOp(String token) {
-        if ("+-*/^".contains(token)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return "+-*/^".contains(token);
 
     }
 
