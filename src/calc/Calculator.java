@@ -219,7 +219,6 @@ class Calculator {
             }
 
         }
-        System.out.print(list);
 
         return list;
     }
