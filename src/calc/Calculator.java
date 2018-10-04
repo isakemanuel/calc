@@ -136,7 +136,10 @@ class Calculator {
 
     List<String> tokenize(String expression){
 
-        // TODO @Bakis Write method to tokenize a string - given a String returning a List<String> with each token in the input String being a String in the List.
+        List<String> list = new ArrayList<>();
+        char[] c = expression.toCharArray();
+
+
 
         return new ArrayList<String>();
     }
