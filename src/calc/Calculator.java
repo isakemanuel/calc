@@ -96,13 +96,88 @@ class Calculator {
 
     // ------- Infix 2 Postfix ------------------------
 
-    List<String> infix2Postfix(List<String> infixList){
+    String infix2Postfix(List<String> infixList){
 
         // TODO @OG: Write method to convert infix expression to postfix expression given a List<String> with each token as a String in the List.
 
-        return new ArrayList<String>();
+        StringBuilder postfix = new StringBuilder();
+        Deque<String> stack = new ArrayDeque<>();
+        String token;
+
+        for (int i = 0; i < infixList.size(); i++) {
+            token = infixList.get(i);
+
+            if (isNum(token)) {
+                postfix.append(token);
+                postfix.append(" ");
+            }
+            else if (isOp(token)) {
+                while (!stack.isEmpty()) {
+                    if (!stack.peek().equals("(")) {
+                        if (getPrecedence(token) < getPrecedence(stack.peek()) || (getPrecedence(token) == getPrecedence(stack.peek()) && getAssociativity(stack.peek()) == Assoc.LEFT)) {
+                            postfix.append(stack.pop());
+                            postfix.append(" ");
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                    else {
+                        break;
+                    }
+                }
+                stack.push(token);
+            }
+            else if (token.equals("(")) {
+                stack.push(token);
+            }
+            else if (token.equals(")")) {
+                while (!stack.peek().equals("(")) {
+                    postfix.append(stack.pop());
+                    postfix.append(" ");
+                }
+                stack.pop();
+            }
+            else {
+                // We just have this else argument incase we would recive som garbage we wouldn't like tot append it to postfix
+            }
+
+            // Checking if we have reade the whole string
+            if (i + 1 == infixList.size()) {
+                while (!stack.isEmpty()) {
+                    postfix.append(stack.pop());
+                    postfix.append(" ");
+                }
+            }
+
+        }
+
+        return postfix.toString();
     }
 
+    boolean isNum(String token) {
+        boolean bool = false;
+        try {
+            float f = Float.parseFloat(token);
+            bool = true;
+        }
+        catch (Exception e) {
+            bool = false;
+        }
+        finally {
+            return bool;
+        }
+    }
+
+    boolean isOp(String token) {
+        if ("+-*/^".contains(token)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
 
     int getPrecedence(String op) {
         if ("+-".contains(op)) {
@@ -140,5 +215,7 @@ class Calculator {
 
         return new ArrayList<String>();
     }
+
+
 
 }
