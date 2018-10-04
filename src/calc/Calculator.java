@@ -96,27 +96,23 @@ class Calculator {
 
     // ------- Infix 2 Postfix ------------------------
 
-    String infix2Postfix(List<String> infixList){
+    List<String> infix2Postfix(List<String> infixList){
 
         // TODO @OG: Write method to convert infix expression to postfix expression given a List<String> with each token as a String in the List.
 
-        StringBuilder postfix = new StringBuilder();
+        List<String> postfixList = new ArrayList<String>();
         Deque<String> stack = new ArrayDeque<>();
-        String token;
 
-        for (int i = 0; i < infixList.size(); i++) {
-            token = infixList.get(i);
+        for (String token: infixList) {
 
             if (isNum(token)) {
-                postfix.append(token);
-                postfix.append(" ");
+                postfixList.add(token);
             }
             else if (isOp(token)) {
                 while (!stack.isEmpty()) {
                     if (!stack.peek().equals("(")) {
                         if (getPrecedence(token) < getPrecedence(stack.peek()) || (getPrecedence(token) == getPrecedence(stack.peek()) && getAssociativity(stack.peek()) == Assoc.LEFT)) {
-                            postfix.append(stack.pop());
-                            postfix.append(" ");
+                            postfixList.add(stack.pop());
                         }
                         else {
                             break;
@@ -133,27 +129,22 @@ class Calculator {
             }
             else if (token.equals(")")) {
                 while (!stack.peek().equals("(")) {
-                    postfix.append(stack.pop());
-                    postfix.append(" ");
+                    postfixList.add(stack.pop());
                 }
                 stack.pop();
             }
             else {
                 // We just have this else argument incase we would recive som garbage we wouldn't like tot append it to postfix
             }
-
-            // Checking if we have reade the whole string
-            if (i + 1 == infixList.size()) {
-                while (!stack.isEmpty()) {
-                    postfix.append(stack.pop());
-                    postfix.append(" ");
-                }
-            }
-
         }
 
-        return postfix.toString();
+        while (!stack.isEmpty()) {
+            postfixList.add(stack.pop());
+        }
+
+        return postfixList;
     }
+
 
     boolean isNum(String token) {
         boolean bool = false;
