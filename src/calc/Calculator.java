@@ -106,10 +106,20 @@ class Calculator {
         List<String> postfixList = new ArrayList<String>();
         Deque<String> stack = new ArrayDeque<>();
 
+        if (!parenthesisMatch(infixList)) {
+            throw new RuntimeException(MISSING_OPERATOR);
+        }
+
         for (String token: infixList) {
 
             if (isNum(token)) {
                 postfixList.add(token);
+            }
+            if (token.equals("e")) {
+                postfixList.add(Double.toString(Math.E));
+            }
+            if (token.equals("pi")) {
+                postfixList.add(Double.toString(Math.PI));
             }
             else if (isOp(token)) {
                 while (!stack.isEmpty()) {
@@ -137,12 +147,13 @@ class Calculator {
                 stack.pop();
             }
             else {
-                // We just have this else argument incase we would recive som garbage we wouldn't like tot append it to postfix
+                throw new RuntimeException(MISSING_OPERATOR);
             }
         }
 
         while (!stack.isEmpty()) {
             postfixList.add(stack.pop());
+
         }
 
         return postfixList;
@@ -163,8 +174,29 @@ class Calculator {
     }
 
     boolean isOp(String token) {
-        return "+-*/^".contains(token);
+        return OPERATORS.contains(token);
+    }
 
+    boolean parenthesisMatch(List<String> infixList) {
+        int rp = 0;
+        int lp = 0;
+        for (String token: infixList) {
+            if ("(".equals(token)) {
+                lp++;
+            }
+            else if (")".equals(token)) {
+                rp++;
+            }
+            else {
+                // Do nothing
+            }
+        }
+        if (rp == lp) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     int getPrecedence(String op) {
