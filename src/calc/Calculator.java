@@ -147,7 +147,7 @@ class Calculator {
                 stack.pop();
             }
             else {
-                // We just have this else argument incase we would recive some garbage, we wouldn't like tot append it to postfix
+                throw new RuntimeException(MISSING_OPERATOR);
             }
         }
 
