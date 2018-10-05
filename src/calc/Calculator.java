@@ -115,21 +115,16 @@ class Calculator {
             if (isNum(token)) {
                 postfixList.add(token);
             }
-            if (token.equals("e")) {
+            else if (token.equals("e")) {
                 postfixList.add(Double.toString(Math.E));
             }
-            if (token.equals("pi")) {
+            else if (token.equals("pi")) {
                 postfixList.add(Double.toString(Math.PI));
             }
             else if (isOp(token)) {
                 while (!stack.isEmpty()) {
-                    if (!stack.peek().equals("(")) {
-                        if (getPrecedence(token) < getPrecedence(stack.peek()) || (getPrecedence(token) == getPrecedence(stack.peek()) && getAssociativity(stack.peek()) == Assoc.LEFT)) {
-                            postfixList.add(stack.pop());
-                        }
-                        else {
-                            break;
-                        }
+                    if (conditions(stack, token)) {
+                        postfixList.add(stack.pop());
                     }
                     else {
                         break;
@@ -174,10 +169,20 @@ class Calculator {
     }
 
     boolean isOp(String token) {
-        return OPERATORS.contains(token);
+        boolean bool = false;
+        if (OPERATORS.contains(token)) {
+            bool = true;
+        }
+        else {
+            bool = false;
+        }
+
+        return bool;
+
     }
 
     boolean parenthesisMatch(List<String> infixList) {
+        boolean bool = false;
         int rp = 0;
         int lp = 0;
         for (String token: infixList) {
@@ -192,11 +197,30 @@ class Calculator {
             }
         }
         if (rp == lp) {
-            return true;
+            bool = true;
         }
         else {
-            return false;
+            bool =  false;
         }
+
+        return bool;
+    }
+
+    boolean conditions(Deque<String> stack, String token) {
+        boolean bool = false;
+        if (!stack.peek().equals("(")){
+            if(getPrecedence(token)<getPrecedence(stack.peek())||(getPrecedence(token)==getPrecedence(stack.peek())&&getAssociativity(stack.peek())==Assoc.LEFT)){
+                bool = true;
+            }
+            else {
+                bool = false;
+            }
+        }
+        else {
+            bool = false;
+        }
+
+        return bool;
     }
 
     int getPrecedence(String op) {
