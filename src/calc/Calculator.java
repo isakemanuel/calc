@@ -231,7 +231,7 @@ class Calculator {
 
     List<String> tokenize(String expression){
 
-        String OPERATORSANDPAR = OPERATORS + "()";
+        String OPERATORSANDPAR = OPERATORS + "()e";
         List<String> list = new ArrayList<>();
         char[] c = expression.toCharArray();
         StringBuilder a;
@@ -248,6 +248,9 @@ class Calculator {
             }
             else if(OPERATORSANDPAR.contains(Character.toString(c[i]))){
                 list.add(Character.toString(c[i]));
+            }
+            else if(c[i] == 'p' && c[i + 1] == 'i'){
+                list.add("pi");
             }
 
         }
