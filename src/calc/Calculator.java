@@ -195,6 +195,10 @@ class Calculator {
             else {
                 // Do nothing
             }
+            if (rp > lp) {
+                bool = false;
+                break;
+            }
         }
         if (rp == lp) {
             bool = true;
